@@ -1,11 +1,61 @@
 # BoltHook
 
-# Boltpard output
+## Boltpard output 触发器推送
 
-# Pardpush Incoming
+### 特点
+* 以WebHook方式向外推送；
+* 支持Pardpush 的 PushCard模式；
+* 支持设置多个触发器；
+
+### 设置
+```javascript
+
+  triggerName:   // 名称
+  topic:         // #Slack like topic
+  HookUrl:       // 目标地址，curl post 。支持设置“以短信发送=>手机号码”，但是msgType 限为 SMS
+  msgType:       // 消息体类型（common、richText、link、pushCard、SMS），空为Common
+  
+  nocstr:        // 干扰串，非必须，按目标hook要求。Pardpush是必须要填写的
+  
+  eventKeys:[]    // trigger 事件点，多选多
+
+```
+
+### 消息体
+参考Pardpush
+
+### eventKeys
+* 标准trigger事件，如：新工单；
+* 流程点结束事件；
+* 流程点结束事件中的自定义trigger事件，如：发现不良评价；
+
+### 自定义trigger
+
+一个独立的功能，在流程的流程点上设置
+```javascript
+
+  while
+    Header.YPKey["key"] 满足 条件1
+    or
+    Header.3rdKey["key"] 满足 条件2
+  then
+    order.setTag("tag1")
+    order.setTag("tag2")
+    
+    Header.YPKey["key2"] = Header.YPKey["key2"]*0.5
+  end  
+
+  // "满足": 大于 小于 between 等于 不等于 contain
+  
+```
+
+## Pardpush Incoming 
+
+### 消息体结构
 
 * 可交互的消息推送；
-* CardPush模式；
+* PushCard模式；
+* 生成多个带token的Url；
 
 ```javascript
 { 
@@ -20,6 +70,8 @@
   "authorAvatar": "http://your.image.url",        // 消息发送者的头像图片，支持图片和svg格式
   "msgType": "pushCard",                          // 支持：文本text、富文本richText、图文链接link、消息卡pushCard、voice、video
   "mediaResourceUrl",                             // 媒体型消息资源
+  
+  "topic":"接单"                                   // 话题归类
   
   /*Pardpush特有，type类型必须是pushCard才有效*/ 
   "callback":{                                    // 回调设置 
@@ -28,6 +80,10 @@
       "context":{                                 // 回调返回的上下文，结构自定义，非必须 
           "orderID":"",
           "contactID":""
+          
+          /*Pardpush need*/           
+          "YPKey":""            
+          "eventKeys":[]           
       }
   }, 
 
@@ -49,8 +105,8 @@
   
   "actionSheet":[                                 // 交互操作界面 
      { 
-          "widgetName" :"selector",               // 控件类型
-          "title" :"性别",                         // 显示的标题
+          "widgetName" :"select",                 // 控件类型:text、textarea、select、datepicker、timepicker、citypicker、phone...
+          "title" :"性别",                         // 显示的标题
           "subTitle" :"请选择",                    // 显示的副标题，非必须
           "valueKey" : "gender",                  // 字段名称 
           "YPKey" : "YPContactGender",            // 优豹字段名称，非必须  
@@ -64,12 +120,12 @@
               }
           ]
      }
-  ], 
+  ] 
 
 } 
 ```
 
-##校验规则
+### 校验规则
 ```javascript
 required:        // 必填,值为true or false，默认false
 email:           // 邮箱地址
