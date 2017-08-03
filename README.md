@@ -3,7 +3,7 @@
 # Boltpard output
 
 # Pardpush Incoming
-
+```javascript
 { 
 /*向外兼容*/ 
   "authorName": "Stack",                          // 消息发送者的姓名，如果留空将显示为配置中的聚合标题 
@@ -31,3 +31,4 @@
 
 
 } 
+```
