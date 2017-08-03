@@ -35,14 +35,14 @@
 ```javascript
 
   while
-    Header.YPKey["key"] 满足 条件1
-    or
-    Header.3rdKey["key"] 满足 条件2
+    order.data.YPKey["key"] 满足 条件1
+      or
+    order.data.TrdKey["key"] 满足 条件2
   then
     order.setTag("tag1")
     order.setTag("tag2")
     
-    Header.YPKey["key2"] = Header.YPKey["key2"]*0.5
+    order.data.YPKey["key2"] = order.data.TrdKey["key3"]*0.5
   end  
 
   // "满足": 大于 小于 between 等于 不等于 contain
