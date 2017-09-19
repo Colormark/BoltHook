@@ -74,7 +74,7 @@
   "topic":"接单"                                   // 话题归类
   
   /*Pardpush特有，type类型必须是pushCard才有效*/ 
-  "callback":{                                    // 回调设置 
+  "keychain":{                                    // 回调设置 
       "access_token" :"",                         // 回调时鉴权用Token
       "method" :"POST",                           // 回调提交模式
       "context":{                                 // 回调返回的上下文，结构自定义，非必须 
@@ -145,4 +145,38 @@ min:             // 数值最小值
 max:             // 数值最大值
 range:           // 数值最小，最大值
 equalTo:         // 再次输入相同的值
+```
+
+
+
+
+###Response
+Paint text/JSON
+```javascript
+{
+   code:"1",    /* -1 ,*/
+   error_msg:""   /**/
+   data:[{
+     "key":"gender",
+     "value":"male",
+     "YPkey":"XXXX"
+   }],
+   "keychain":{                                    // 回调设置 
+      "access_token" :"",                         // 回调时鉴权用Token
+      "method" :"POST",                           // 回调提交模式
+      "context":{                                 // 回调返回的上下文，结构自定义，非必须 
+          "orderID":"",
+          "contactID":""
+          
+          /*Pardpush need*/           
+          "YPKey":""            
+          "eventKeys":[]           
+      }
+  }
+
+
+}
+
+
+
 ```
