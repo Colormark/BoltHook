@@ -48,10 +48,38 @@ Order:
     },
     
     "registerTodo":function(targetTime,memo,fireEvent){}, //targetTime:目标时间Unix时间戳，memo备注，fireEvent:到期执行的事件函数
+    
+    "roadMap":[], //计划
+  
+    "currentState":{
+       "stateCode":"302",
+       "stateLabel":"已派单"
+    },
+    
+    "doneSteps":[],//已完成步骤
+    
+    "delegate":{
+        "registerEvent": function(methodEnum,EventID,EventFunction){},//EventID 自定义，需唯一；methodEnum详见下文
+        "fireEvent": function(EventID){},
+        "hasEvent": function(EventID){}
+    },
+    
+    "baseInfo"：{
+        orderID:"",
+        orderOwner:{},
+        ...
+    }
 
 }
 
 ```
+#### methodEnum 
+* ConsumerOnProfileUpdated(profile)
+* OrderRequestOnProfileUpdated(profile)
+* StateBeforeChangeTo(State)
+* StateOnChanged(State)
+* OrderOwnerOnChanged(owner)
+...
 
 
 ### 修改值
