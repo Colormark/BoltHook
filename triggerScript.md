@@ -1,6 +1,6 @@
 ## 说明 
 * 闭包运行，只允许对当前工单的数据进行操作 
-* 只支持Order的自由方法，不支持给Order扩展方法 
+* 只支持Order的自有方法，不支持给Order扩展方法 
 
 ### Order Methods
 ```javascript
