@@ -1,5 +1,6 @@
 ## 说明 
-闭包运行，只允许对当前工单的数据进行操作
+* 闭包运行，只允许对当前工单的数据进行操作 
+* 只支持Order的自由方法，不支持给Order扩展方法 
 
 ### Order Methods
 ```javascript
@@ -43,10 +44,10 @@ Order:
     
     "notifaction":{
         "toMember": function(memberID,msgContent,msgChannel,msgType){},//msgChannel[Array]:sms,wechat,boltpard...
-        "toConsumer": function(consumerID,msgContent,msgChannel,msgType){},//msgType:text,pushcard,voice...
+        "toConsumer": function(msgContent,msgChannel,msgType){},//msgType:text,pushcard,voice...
     },
     
-    "todo":function(targetTime,memo,fireEvent){}, //targetTime:
+    "registerTodo":function(targetTime,memo,fireEvent){}, //targetTime:目标时间Unix时间戳，memo备注，fireEvent:到期执行的事件函数
 
 }
 
@@ -66,6 +67,17 @@ if (orderMoney > 1000){
   Order.data.set("Commission", orderMoney*0.1, "CustomKey");
 }else{
   Order.data.set("Commission", orderMoney*0.15, "CustomKey");
+}
+
+```
+
+### 复杂
+```javascript
+if (Order.tag.hasTag("疑难工单")){
+  Order.notifaction.toConsumer("试用期开始","wechat","text");
+  Order.registerTodo("3736237273","试用期到期提醒",function(){
+      Order.notifaction.toConsumer("试用期结束","wechat","text");
+  });
 }
 
 ```
